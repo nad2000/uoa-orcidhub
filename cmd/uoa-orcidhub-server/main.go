@@ -27,8 +27,8 @@ func main() {
 	defer server.Shutdown()
 
 	parser := flags.NewParser(server, flags.Default)
-	parser.ShortDescription = "UOA to ORCIDHUB"
-	parser.LongDescription = "This is an example of using OAuth2 Implicit Flow in a specification to describe security to your API."
+	parser.ShortDescription = "UoA to ORCIDHub"
+	parser.LongDescription = "This is UoA to ORCIDHub integration application."
 
 	server.ConfigureFlags()
 	for _, optsGroup := range api.CommandLineOptionsGroups {

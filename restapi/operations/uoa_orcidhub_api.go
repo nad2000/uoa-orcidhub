@@ -18,11 +18,13 @@ import (
 	spec "github.com/go-openapi/spec"
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+
+	"github.com/nad2000/uoa-orcidhub/restapi/operations/update"
 )
 
-// NewSampleImplicitFlowOAuth2ProjectAPI creates a new SampleImplicitFlowOAuth2Project instance
-func NewSampleImplicitFlowOAuth2ProjectAPI(spec *loads.Document) *SampleImplicitFlowOAuth2ProjectAPI {
-	return &SampleImplicitFlowOAuth2ProjectAPI{
+// NewUoaOrcidhubAPI creates a new UoaOrcidhub instance
+func NewUoaOrcidhubAPI(spec *loads.Document) *UoaOrcidhubAPI {
+	return &UoaOrcidhubAPI{
 		handlers:            make(map[string]map[string]http.Handler),
 		formats:             strfmt.Default,
 		defaultConsumes:     "application/json",
@@ -40,8 +42,8 @@ func NewSampleImplicitFlowOAuth2ProjectAPI(spec *loads.Document) *SampleImplicit
 		GetPingHandler: GetPingHandlerFunc(func(params GetPingParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetPing has not yet been implemented")
 		}),
-		PostHangleHandler: PostHangleHandlerFunc(func(params PostHangleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation PostHangle has not yet been implemented")
+		UpdatePostHandleHandler: update.PostHandleHandlerFunc(func(params update.PostHandleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation UpdatePostHandle has not yet been implemented")
 		}),
 
 		ImplicitAuth: func(token string, scopes []string) (interface{}, error) {
@@ -53,8 +55,8 @@ func NewSampleImplicitFlowOAuth2ProjectAPI(spec *loads.Document) *SampleImplicit
 	}
 }
 
-/*SampleImplicitFlowOAuth2ProjectAPI This is an example of using OAuth2 Implicit Flow in a specification to describe security to your API. */
-type SampleImplicitFlowOAuth2ProjectAPI struct {
+/*UoaOrcidhubAPI This is UoA to ORCIDHub integration application. */
+type UoaOrcidhubAPI struct {
 	spec            *loads.Document
 	context         *middleware.Context
 	handlers        map[string]map[string]http.Handler
@@ -90,8 +92,8 @@ type SampleImplicitFlowOAuth2ProjectAPI struct {
 
 	// GetPingHandler sets the operation handler for the get ping operation
 	GetPingHandler GetPingHandler
-	// PostHangleHandler sets the operation handler for the post hangle operation
-	PostHangleHandler PostHangleHandler
+	// UpdatePostHandleHandler sets the operation handler for the post handle operation
+	UpdatePostHandleHandler update.PostHandleHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -109,42 +111,42 @@ type SampleImplicitFlowOAuth2ProjectAPI struct {
 }
 
 // SetDefaultProduces sets the default produces media type
-func (o *SampleImplicitFlowOAuth2ProjectAPI) SetDefaultProduces(mediaType string) {
+func (o *UoaOrcidhubAPI) SetDefaultProduces(mediaType string) {
 	o.defaultProduces = mediaType
 }
 
 // SetDefaultConsumes returns the default consumes media type
-func (o *SampleImplicitFlowOAuth2ProjectAPI) SetDefaultConsumes(mediaType string) {
+func (o *UoaOrcidhubAPI) SetDefaultConsumes(mediaType string) {
 	o.defaultConsumes = mediaType
 }
 
 // SetSpec sets a spec that will be served for the clients.
-func (o *SampleImplicitFlowOAuth2ProjectAPI) SetSpec(spec *loads.Document) {
+func (o *UoaOrcidhubAPI) SetSpec(spec *loads.Document) {
 	o.spec = spec
 }
 
 // DefaultProduces returns the default produces media type
-func (o *SampleImplicitFlowOAuth2ProjectAPI) DefaultProduces() string {
+func (o *UoaOrcidhubAPI) DefaultProduces() string {
 	return o.defaultProduces
 }
 
 // DefaultConsumes returns the default consumes media type
-func (o *SampleImplicitFlowOAuth2ProjectAPI) DefaultConsumes() string {
+func (o *UoaOrcidhubAPI) DefaultConsumes() string {
 	return o.defaultConsumes
 }
 
 // Formats returns the registered string formats
-func (o *SampleImplicitFlowOAuth2ProjectAPI) Formats() strfmt.Registry {
+func (o *UoaOrcidhubAPI) Formats() strfmt.Registry {
 	return o.formats
 }
 
 // RegisterFormat registers a custom format validator
-func (o *SampleImplicitFlowOAuth2ProjectAPI) RegisterFormat(name string, format strfmt.Format, validator strfmt.Validator) {
+func (o *UoaOrcidhubAPI) RegisterFormat(name string, format strfmt.Format, validator strfmt.Validator) {
 	o.formats.Add(name, format, validator)
 }
 
-// Validate validates the registrations in the SampleImplicitFlowOAuth2ProjectAPI
-func (o *SampleImplicitFlowOAuth2ProjectAPI) Validate() error {
+// Validate validates the registrations in the UoaOrcidhubAPI
+func (o *UoaOrcidhubAPI) Validate() error {
 	var unregistered []string
 
 	if o.JSONConsumer == nil {
@@ -163,8 +165,8 @@ func (o *SampleImplicitFlowOAuth2ProjectAPI) Validate() error {
 		unregistered = append(unregistered, "GetPingHandler")
 	}
 
-	if o.PostHangleHandler == nil {
-		unregistered = append(unregistered, "PostHangleHandler")
+	if o.UpdatePostHandleHandler == nil {
+		unregistered = append(unregistered, "update.PostHandleHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -175,12 +177,12 @@ func (o *SampleImplicitFlowOAuth2ProjectAPI) Validate() error {
 }
 
 // ServeErrorFor gets a error handler for a given operation id
-func (o *SampleImplicitFlowOAuth2ProjectAPI) ServeErrorFor(operationID string) func(http.ResponseWriter, *http.Request, error) {
+func (o *UoaOrcidhubAPI) ServeErrorFor(operationID string) func(http.ResponseWriter, *http.Request, error) {
 	return o.ServeError
 }
 
 // AuthenticatorsFor gets the authenticators for the specified security schemes
-func (o *SampleImplicitFlowOAuth2ProjectAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
+func (o *UoaOrcidhubAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
 
 	result := make(map[string]runtime.Authenticator)
 	for name, scheme := range schemes {
@@ -197,14 +199,14 @@ func (o *SampleImplicitFlowOAuth2ProjectAPI) AuthenticatorsFor(schemes map[strin
 }
 
 // Authorizer returns the registered authorizer
-func (o *SampleImplicitFlowOAuth2ProjectAPI) Authorizer() runtime.Authorizer {
+func (o *UoaOrcidhubAPI) Authorizer() runtime.Authorizer {
 
 	return o.APIAuthorizer
 
 }
 
 // ConsumersFor gets the consumers for the specified media types
-func (o *SampleImplicitFlowOAuth2ProjectAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consumer {
+func (o *UoaOrcidhubAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consumer {
 
 	result := make(map[string]runtime.Consumer)
 	for _, mt := range mediaTypes {
@@ -224,7 +226,7 @@ func (o *SampleImplicitFlowOAuth2ProjectAPI) ConsumersFor(mediaTypes []string) m
 }
 
 // ProducersFor gets the producers for the specified media types
-func (o *SampleImplicitFlowOAuth2ProjectAPI) ProducersFor(mediaTypes []string) map[string]runtime.Producer {
+func (o *UoaOrcidhubAPI) ProducersFor(mediaTypes []string) map[string]runtime.Producer {
 
 	result := make(map[string]runtime.Producer)
 	for _, mt := range mediaTypes {
@@ -244,7 +246,7 @@ func (o *SampleImplicitFlowOAuth2ProjectAPI) ProducersFor(mediaTypes []string) m
 }
 
 // HandlerFor gets a http.Handler for the provided operation method and path
-func (o *SampleImplicitFlowOAuth2ProjectAPI) HandlerFor(method, path string) (http.Handler, bool) {
+func (o *UoaOrcidhubAPI) HandlerFor(method, path string) (http.Handler, bool) {
 	if o.handlers == nil {
 		return nil, false
 	}
@@ -259,8 +261,8 @@ func (o *SampleImplicitFlowOAuth2ProjectAPI) HandlerFor(method, path string) (ht
 	return h, ok
 }
 
-// Context returns the middleware context for the sample implicit flow o auth2 project API
-func (o *SampleImplicitFlowOAuth2ProjectAPI) Context() *middleware.Context {
+// Context returns the middleware context for the uoa orcidhub API
+func (o *UoaOrcidhubAPI) Context() *middleware.Context {
 	if o.context == nil {
 		o.context = middleware.NewRoutableContext(o.spec, o, nil)
 	}
@@ -268,7 +270,7 @@ func (o *SampleImplicitFlowOAuth2ProjectAPI) Context() *middleware.Context {
 	return o.context
 }
 
-func (o *SampleImplicitFlowOAuth2ProjectAPI) initHandlerCache() {
+func (o *UoaOrcidhubAPI) initHandlerCache() {
 	o.Context() // don't care about the result, just that the initialization happened
 
 	if o.handlers == nil {
@@ -283,13 +285,13 @@ func (o *SampleImplicitFlowOAuth2ProjectAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/hangle"] = NewPostHangle(o.context, o.PostHangleHandler)
+	o.handlers["POST"]["/handle"] = update.NewPostHandle(o.context, o.UpdatePostHandleHandler)
 
 }
 
 // Serve creates a http handler to serve the API over HTTP
 // can be used directly in http.ListenAndServe(":8000", api.Serve(nil))
-func (o *SampleImplicitFlowOAuth2ProjectAPI) Serve(builder middleware.Builder) http.Handler {
+func (o *UoaOrcidhubAPI) Serve(builder middleware.Builder) http.Handler {
 	o.Init()
 
 	if o.Middleware != nil {
@@ -299,18 +301,18 @@ func (o *SampleImplicitFlowOAuth2ProjectAPI) Serve(builder middleware.Builder) h
 }
 
 // Init allows you to just initialize the handler cache, you can then recompose the middleware as you see fit
-func (o *SampleImplicitFlowOAuth2ProjectAPI) Init() {
+func (o *UoaOrcidhubAPI) Init() {
 	if len(o.handlers) == 0 {
 		o.initHandlerCache()
 	}
 }
 
 // RegisterConsumer allows you to add (or override) a consumer for a media type.
-func (o *SampleImplicitFlowOAuth2ProjectAPI) RegisterConsumer(mediaType string, consumer runtime.Consumer) {
+func (o *UoaOrcidhubAPI) RegisterConsumer(mediaType string, consumer runtime.Consumer) {
 	o.customConsumers[mediaType] = consumer
 }
 
 // RegisterProducer allows you to add (or override) a producer for a media type.
-func (o *SampleImplicitFlowOAuth2ProjectAPI) RegisterProducer(mediaType string, producer runtime.Producer) {
+func (o *UoaOrcidhubAPI) RegisterProducer(mediaType string, producer runtime.Producer) {
 	o.customProducers[mediaType] = producer
 }

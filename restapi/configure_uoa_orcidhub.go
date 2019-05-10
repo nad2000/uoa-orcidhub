@@ -11,9 +11,10 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 
 	"github.com/nad2000/uoa-orcidhub/restapi/operations"
+	"github.com/nad2000/uoa-orcidhub/restapi/operations/update"
 )
 
-//go:generate swagger generate server --target ../../uoa-orcidhub --name UoaOrcidhub --spec ../swagger.json
+//go:generate swagger generate server --target ../../uoa-orcidhub --name UoaOrcidhub --spec ../swagger.yaml
 
 func configureFlags(api *operations.UoaOrcidhubAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -47,9 +48,9 @@ func configureAPI(api *operations.UoaOrcidhubAPI) http.Handler {
 			return middleware.NotImplemented("operation .GetPing has not yet been implemented")
 		})
 	}
-	if api.PostHangleHandler == nil {
-		api.PostHangleHandler = operations.PostHangleHandlerFunc(func(params operations.PostHangleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation .PostHangle has not yet been implemented")
+	if api.UpdatePostHandleHandler == nil {
+		api.UpdatePostHandleHandler = update.PostHandleHandlerFunc(func(params update.PostHandleParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation update.PostHandle has not yet been implemented")
 		})
 	}
 

@@ -19,22 +19,25 @@ var (
 func init() {
 	SwaggerJSON = json.RawMessage([]byte(`{
   "schemes": [
-    "https"
+    "http"
   ],
   "swagger": "2.0",
   "info": {
-    "description": "This is an example of using OAuth2 Implicit Flow in a specification to describe security to your API.",
-    "title": "UOA to ORCIDHUB",
-    "version": "1.0.0"
+    "description": "This is UoA to ORCIDHub integration application.",
+    "title": "UoA to ORCIDHub",
+    "version": "v1"
   },
   "host": "virtserver.swaggerhub.com",
-  "basePath": "/uoa-orcidhub/v1",
+  "basePath": "/api/v1",
   "paths": {
-    "/hangle": {
+    "/handle": {
       "post": {
         "description": "Handle employer update event.",
         "consumes": [
           "application/json"
+        ],
+        "tags": [
+          "update"
         ],
         "summary": "Handle employer update event",
         "parameters": [
@@ -43,11 +46,14 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
+              "required": [
+                "subject"
+              ],
               "properties": {
                 "subject": {
                   "description": "User UAID",
                   "type": "string",
-                  "format": "[0-9]{5,6}"
+                  "format": "[0-9]{8,10}"
                 }
               }
             }
@@ -95,22 +101,25 @@ func init() {
 }`))
 	FlatSwaggerJSON = json.RawMessage([]byte(`{
   "schemes": [
-    "https"
+    "http"
   ],
   "swagger": "2.0",
   "info": {
-    "description": "This is an example of using OAuth2 Implicit Flow in a specification to describe security to your API.",
-    "title": "UOA to ORCIDHUB",
-    "version": "1.0.0"
+    "description": "This is UoA to ORCIDHub integration application.",
+    "title": "UoA to ORCIDHub",
+    "version": "v1"
   },
   "host": "virtserver.swaggerhub.com",
-  "basePath": "/uoa-orcidhub/v1",
+  "basePath": "/api/v1",
   "paths": {
-    "/hangle": {
+    "/handle": {
       "post": {
         "description": "Handle employer update event.",
         "consumes": [
           "application/json"
+        ],
+        "tags": [
+          "update"
         ],
         "summary": "Handle employer update event",
         "parameters": [
@@ -119,11 +128,14 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
+              "required": [
+                "subject"
+              ],
               "properties": {
                 "subject": {
                   "description": "User UAID",
                   "type": "string",
-                  "format": "[0-9]{5,6}"
+                  "format": "[0-9]{8,10}"
                 }
               }
             }
