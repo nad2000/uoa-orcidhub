@@ -1,0 +1,476 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "2.1.0",
+        "title": "Employment API V1",
+        "description": "Access to employee information from Peoplesoft",
+        "contact": {
+            "name": "Swathi Juluri",
+            "email": "api-team@list.auckland.ac.nz"
+        },
+        "license": {
+            "name": ""
+        }
+    },
+    "host": "api.dev.auckland.ac.nz",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/service/employment/v1",
+    "tags": [
+        {
+            "name": "Employment",
+            "description": "Employment API endpoints"
+        }
+    ],
+    "paths": {
+        "/employee/{upiOrId}": {
+            "get": {
+                "tags": [
+                    "Employment"
+                ],
+                "summary": "Returns the employees information",
+                "description": "'Returns a complete hremployee object for user with the entered upi or id, including subresources such as phones or addresses.'\n",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "upiOrId",
+                        "in": "path",
+                        "description": "Upi or Id of an employee",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "hremployee response",
+                        "schema": {
+                            "$ref": "#/definitions/Hremployee"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (unsupported id)",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "employee not found"
+                    },
+                    "500": {
+                        "description": "Unexpected error"
+                    },
+                    "501": {
+                        "description": "Unsupported operation (not implemented)"
+                    }
+                },
+                "security": [
+                    {
+                        "hremployee_oauth_implicit": [
+                            "employee-read"
+                        ]
+                    },
+                    {
+                        "hremployee_oauth_authcode": [
+                            "employee-read"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/employee/self": {
+            "get": {
+                "tags": [
+                    "Employment"
+                ],
+                "summary": "Returns employment information of the remote user",
+                "description": "'Returns a complete hremployee object for current logged in user, including subresources such as phones or addresses.'\n",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "hremployee response",
+                        "schema": {
+                            "$ref": "#/definitions/Hremployee"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (unsupported id)",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "employee not found"
+                    },
+                    "500": {
+                        "description": "Unexpected error"
+                    },
+                    "501": {
+                        "description": "Unsupported operation (not implemented)"
+                    }
+                },
+                "security": [
+                    {
+                        "hremployee_oauth_implicit": [
+                            "employee-read"
+                        ]
+                    },
+                    {
+                        "hremployee_oauth_authcode": [
+                            "employee-read"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/codes/employee-action": {
+            "get": {
+                "tags": [
+                    "Employment"
+                ],
+                "summary": "Information about logged-in user",
+                "description": "Returns employee-action code and values",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User information",
+                        "schema": {
+                            "$ref": "#/definitions/Code"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "hremployee_oauth_implicit": [
+                            "employee-read"
+                        ]
+                    },
+                    {
+                        "hremployee_oauth_authcode": [
+                            "employee-read"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/codes/employee-status": {
+            "get": {
+                "tags": [
+                    "Employment"
+                ],
+                "summary": "Information about logged-in user",
+                "description": "Returns employee-status code and values",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User information",
+                        "schema": {
+                            "$ref": "#/definitions/Code"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "hremployee_oauth_implicit": [
+                            "employee-read"
+                        ]
+                    },
+                    {
+                        "hremployee_oauth_authcode": [
+                            "employee-read"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/codes/status": {
+            "get": {
+                "tags": [
+                    "Employment"
+                ],
+                "summary": "Information about logged-in user",
+                "description": "Returns status code and values",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User information",
+                        "schema": {
+                            "$ref": "#/definitions/Code"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "hremployee_oauth_implicit": [
+                            "employee-read"
+                        ]
+                    },
+                    {
+                        "hremployee_oauth_authcode": [
+                            "employee-read"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/codes/regtemp": {
+            "get": {
+                "tags": [
+                    "Employment"
+                ],
+                "summary": "Information about logged-in user",
+                "description": "Returns regtemp code and values",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User information",
+                        "schema": {
+                            "$ref": "#/definitions/Code"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Unexpected error"
+                    }
+                },
+                "security": [
+                    {
+                        "hremployee_oauth_implicit": [
+                            "employee-read"
+                        ]
+                    },
+                    {
+                        "hremployee_oauth_authcode": [
+                            "employee-read"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "securityDefinitions": {
+        "hremployee_oauth_implicit": {
+            "type": "oauth2",
+            "authorizationUrl": "https://oauth.dev.auckland.ac.nz/employment-v1/oauth2/authorize",
+            "flow": "implicit",
+            "scopes": {
+                "employee-read": "Read employment information"
+            }
+        },
+        "hremployee_oauth_authcode": {
+            "type": "oauth2",
+            "authorizationUrl": "https://oauth.dev.auckland.ac.nz/employment-v1/oauth2/authorize",
+            "tokenUrl": "https://api.dev.auckland.ac.nz/service/employment/v1/oauth2/token",
+            "flow": "accessCode",
+            "scopes": {
+                "employee-read": "Read employment information"
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "type": "object",
+            "required": [
+                "error",
+                "message"
+            ],
+            "properties": {
+                "timestamp": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "number"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "Code": {
+            "type": "object"
+        },
+        "Job": {
+            "type": "object",
+            "properties": {
+                "employeeRecord": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "effectiveDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "effectiveSequence": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "organizationalRelation": {
+                    "type": "string"
+                },
+                "departmentID": {
+                    "type": "string"
+                },
+                "departmentDescription": {
+                    "type": "string"
+                },
+                "jobCode": {
+                    "type": "string"
+                },
+				"jobGrade": {
+					"type": "string"
+				},
+                "positionNumber": {
+                    "type": "string"
+                },
+                "positionDescription": {
+                    "type": "string"
+                },
+                "hrStatus": {
+                    "type": "string"
+                },
+                "employeeStatus": {
+                    "type": "string"
+                },
+                "lastHRaction": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "locationDescription": {
+                    "type": "string"
+                },
+                "standardHours": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "employeeType": {
+                    "type": "string"
+                },
+                "salAdminPlan": {
+                    "type": "string"
+                },
+                "fullTimeEquivalent": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "jobIndicator": {
+                    "type": "string"
+                },
+                "supervisorID": {
+                    "type": "string"
+                },
+                "poiType": {
+                    "type": "string"
+                },
+                "jobStartDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "jobEndDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "jobCodeDescription": {
+                    "type": "string"
+                },
+                "parentDepartmentDescription": {
+                    "type": "string"
+                },
+                "primaryActivityCentreDeptID": {
+                    "type": "string"
+                },
+                "primaryActivityCentreDeptDescription": {
+                    "type": "string"
+                },
+                "reportsToPosition": {
+                    "type": "string"
+                },
+                "company": {
+                    "type": "string"
+                },
+                "costCentre": {
+                    "type": "string"
+                },
+                "updatedDateTime": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Hremployee": {
+            "type": "object",
+            "properties": {
+                "employeeID": {
+                    "type": "string"
+                },
+                "professionalStaffFTE": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "academicStaffFTE": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "uniServicesFTE": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "requestTimeStamp": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "job": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Job"
+                    }
+                }
+            }
+        }
+    }
+}
