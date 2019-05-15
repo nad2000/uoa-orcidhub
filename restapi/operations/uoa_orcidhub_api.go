@@ -42,16 +42,9 @@ func NewUoaOrcidhubAPI(spec *loads.Document) *UoaOrcidhubAPI {
 		GetPingHandler: GetPingHandlerFunc(func(params GetPingParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetPing has not yet been implemented")
 		}),
-		UpdatePostHandleHandler: update.PostHandleHandlerFunc(func(params update.PostHandleParams, principal interface{}) middleware.Responder {
+		UpdatePostHandleHandler: update.PostHandleHandlerFunc(func(params update.PostHandleParams) middleware.Responder {
 			return middleware.NotImplemented("operation UpdatePostHandle has not yet been implemented")
 		}),
-
-		ImplicitAuth: func(token string, scopes []string) (interface{}, error) {
-			return nil, errors.NotImplemented("oauth2 bearer auth (implicit) has not yet been implemented")
-		},
-
-		// default authorizer is authorized meaning no requests are blocked
-		APIAuthorizer: security.Authorized(),
 	}
 }
 
@@ -82,13 +75,6 @@ type UoaOrcidhubAPI struct {
 
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
-
-	// ImplicitAuth registers a function that takes an access token and a collection of required scopes and returns a principal
-	// it performs authentication based on an oauth2 bearer token provided in the request
-	ImplicitAuth func(string, []string) (interface{}, error)
-
-	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
-	APIAuthorizer runtime.Authorizer
 
 	// GetPingHandler sets the operation handler for the get ping operation
 	GetPingHandler GetPingHandler
@@ -157,10 +143,6 @@ func (o *UoaOrcidhubAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.ImplicitAuth == nil {
-		unregistered = append(unregistered, "ImplicitAuth")
-	}
-
 	if o.GetPingHandler == nil {
 		unregistered = append(unregistered, "GetPingHandler")
 	}
@@ -184,24 +166,14 @@ func (o *UoaOrcidhubAPI) ServeErrorFor(operationID string) func(http.ResponseWri
 // AuthenticatorsFor gets the authenticators for the specified security schemes
 func (o *UoaOrcidhubAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
 
-	result := make(map[string]runtime.Authenticator)
-	for name, scheme := range schemes {
-		switch name {
-
-		case "implicit":
-
-			result[name] = o.BearerAuthenticator(scheme.Name, o.ImplicitAuth)
-
-		}
-	}
-	return result
+	return nil
 
 }
 
 // Authorizer returns the registered authorizer
 func (o *UoaOrcidhubAPI) Authorizer() runtime.Authorizer {
 
-	return o.APIAuthorizer
+	return nil
 
 }
 

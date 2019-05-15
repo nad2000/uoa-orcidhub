@@ -4,15 +4,15 @@ info:
   title: UoA to ORCIDHub
   description: This is UoA to ORCIDHub integration application.
 
-securityDefinitions:
-  implicit:
-    type: oauth2
-    # This should be updated to the Authorization URL of your OAuth provider.
-    authorizationUrl: http://example.com/oauth/auth
-    flow: implicit
-    scopes:
-      write: allows modifying resources
-      read: allows reading resources
+# securityDefinitions:
+#   implicit:
+#     type: oauth2
+#     # This should be updated to the Authorization URL of your OAuth provider.
+#     authorizationUrl: http://example.com/oauth/auth
+#     flow: implicit
+#     scopes:
+#       write: allows modifying resources
+#       read: allows reading resources
 
 security:
   - implicit:
@@ -27,6 +27,7 @@ paths:
         - application/json
       summary: Handle employer update event
       description: Handle employer update event.
+      security: [ ]
       parameters:
         - description: Message body with AUID.
           in: body
@@ -51,7 +52,7 @@ paths:
         200:
           description: OK
 
-host: virtserver.swaggerhub.com
+# host: virtserver.swaggerhub.com
 # basePath: /uoa-orcidhub/api/v1
 schemes:
  - http

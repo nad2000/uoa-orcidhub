@@ -27,11 +27,11 @@ func init() {
     "title": "UoA to ORCIDHub",
     "version": "v1"
   },
-  "host": "virtserver.swaggerhub.com",
   "basePath": "/api/v1",
   "paths": {
     "/handle": {
       "post": {
+        "security": [],
         "description": "Handle employer update event.",
         "consumes": [
           "application/json"
@@ -76,17 +76,6 @@ func init() {
             "description": "OK"
           }
         }
-      }
-    }
-  },
-  "securityDefinitions": {
-    "implicit": {
-      "type": "oauth2",
-      "flow": "implicit",
-      "authorizationUrl": "http://example.com/oauth/auth",
-      "scopes": {
-        "read": "allows reading resources",
-        "write": "allows modifying resources"
       }
     }
   },
@@ -109,11 +98,11 @@ func init() {
     "title": "UoA to ORCIDHub",
     "version": "v1"
   },
-  "host": "virtserver.swaggerhub.com",
   "basePath": "/api/v1",
   "paths": {
     "/handle": {
       "post": {
+        "security": [],
         "description": "Handle employer update event.",
         "consumes": [
           "application/json"
@@ -158,17 +147,6 @@ func init() {
             "description": "OK"
           }
         }
-      }
-    }
-  },
-  "securityDefinitions": {
-    "implicit": {
-      "type": "oauth2",
-      "flow": "implicit",
-      "authorizationUrl": "http://example.com/oauth/auth",
-      "scopes": {
-        "read": "allows reading resources",
-        "write": "allows modifying resources"
       }
     }
   },

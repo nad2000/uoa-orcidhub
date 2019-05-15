@@ -7,7 +7,7 @@ This is UoA to ORCIDHub integration application.
 
     Schemes:
       http
-    Host: virtserver.swaggerhub.com
+    Host: localhost
     BasePath: /api/v1
     Version: v1
 

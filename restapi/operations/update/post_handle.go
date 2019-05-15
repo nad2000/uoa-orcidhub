@@ -16,16 +16,16 @@ import (
 )
 
 // PostHandleHandlerFunc turns a function with the right signature into a post handle handler
-type PostHandleHandlerFunc func(PostHandleParams, interface{}) middleware.Responder
+type PostHandleHandlerFunc func(PostHandleParams) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn PostHandleHandlerFunc) Handle(params PostHandleParams, principal interface{}) middleware.Responder {
-	return fn(params, principal)
+func (fn PostHandleHandlerFunc) Handle(params PostHandleParams) middleware.Responder {
+	return fn(params)
 }
 
 // PostHandleHandler interface for that can handle valid post handle params
 type PostHandleHandler interface {
-	Handle(PostHandleParams, interface{}) middleware.Responder
+	Handle(PostHandleParams) middleware.Responder
 }
 
 // NewPostHandle creates a new http.Handler for the post handle operation
@@ -52,25 +52,12 @@ func (o *PostHandle) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 	var Params = NewPostHandleParams()
 
-	uprinc, aCtx, err := o.Context.Authorize(r, route)
-	if err != nil {
-		o.Context.Respond(rw, r, route.Produces, route, err)
-		return
-	}
-	if aCtx != nil {
-		r = aCtx
-	}
-	var principal interface{}
-	if uprinc != nil {
-		principal = uprinc
-	}
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
-	res := o.Handler.Handle(Params, principal) // actually handle the request
+	res := o.Handler.Handle(Params) // actually handle the request
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 

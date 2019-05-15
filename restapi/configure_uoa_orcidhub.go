@@ -34,23 +34,15 @@ func configureAPI(api *operations.UoaOrcidhubAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.ImplicitAuth = func(token string, scopes []string) (interface{}, error) {
-		return nil, errors.NotImplemented("oauth2 bearer auth (implicit) has not yet been implemented")
-	}
-
-	// Set your custom authorizer if needed. Default one is security.Authorized()
-	// Expected interface runtime.Authorizer
-	//
-	// Example:
-	// api.APIAuthorizer = security.Authorized()
 	if api.GetPingHandler == nil {
 		api.GetPingHandler = operations.GetPingHandlerFunc(func(params operations.GetPingParams) middleware.Responder {
 			return middleware.NotImplemented("operation .GetPing has not yet been implemented")
 		})
 	}
 	if api.UpdatePostHandleHandler == nil {
-		api.UpdatePostHandleHandler = update.PostHandleHandlerFunc(func(params update.PostHandleParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation update.PostHandle has not yet been implemented")
+		api.UpdatePostHandleHandler = update.PostHandleHandlerFunc(func(params update.PostHandleParams) middleware.Responder {
+			// return middleware.NotImplemented("operation update.PostHandle has not yet been implemented")
+			return update.NewPostHandleCreated()
 		})
 	}
 
