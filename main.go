@@ -29,13 +29,20 @@ var (
 
 func main() {
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", homepage.HomeHandler)
+	logger := log.New()
+	logger.Out = os.Stderr
+	logger.SetFormatter(&log.TextFormatter{
+		FullTimestamp: true,
+	})
+	h := homepage.NewHandlers(logger)
 
-	log.Infoln("Starting the server...")
-	log.Infof("Certificate: %q", CertFile)
-	log.Infof("Server Key: %q", KeyFile)
-	log.Infof("Service Assress: %q", ServiceAddr)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", h.Home)
+
+	logger.Infoln("Starting the server...")
+	logger.Infof("Certificate: %q", CertFile)
+	logger.Infof("Server Key: %q", KeyFile)
+	logger.Infof("Service Assress: %q", ServiceAddr)
 	// err := http.ListenAndServe(":8080", mux) // Invokes the built-in server
 
 	srv := server.New(mux, ServiceAddr)
