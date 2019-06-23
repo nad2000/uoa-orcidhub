@@ -14,7 +14,7 @@ import (
 
 const message = "..."
 
-func getenv(key, defaultValue string) {
+func getenv(key, defaultValue string) string {
 	value, ok := os.LookupEnv(key)
 	if !ok {
 		value = defaultValue
@@ -23,15 +23,13 @@ func getenv(key, defaultValue string) {
 }
 
 var (
-	CertFile    = os.Getenv("CERT_FILE")
-	KeyFile     = os.Getenv("KEY_FILE")
-	ServiceAddr = os.Getenv("SERVICE_ADDR")
+	CertFile    = getenv("CERT_FILE", "./server.crt")
+	KeyFile     = getenv("KEY_FILE", "./server.key")
+	ServiceAddr = getenv("SERVICE_ADDR", ":8080")
 )
 
 func main() {
 
-	if CertFile == "" {
-		CertFile 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// microoptimization:
