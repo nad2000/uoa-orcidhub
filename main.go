@@ -9,10 +9,9 @@ import (
 	"os"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/nad2000/uoa-orcidhub/homepage"
 	"github.com/nad2000/uoa-orcidhub/server"
 )
-
-const message = "..."
 
 func getenv(key, defaultValue string) string {
 	value, ok := os.LookupEnv(key)
@@ -31,14 +30,12 @@ var (
 func main() {
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		// microoptimization:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(message))
-	})
+	mux.HandleFunc("/", homepage.HomeHandler)
 
 	log.Infoln("Starting the server...")
+	log.Infof("Certificate: %q", CertFile)
+	log.Infof("Server Key: %q", KeyFile)
+	log.Infof("Service Assress: %q", ServiceAddr)
 	// err := http.ListenAndServe(":8080", mux) // Invokes the built-in server
 
 	srv := server.New(mux, ServiceAddr)
