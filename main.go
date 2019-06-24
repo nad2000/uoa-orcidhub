@@ -29,6 +29,7 @@ var (
 
 func main() {
 
+	// TODO: figure out how to prefix log lines with a prefix
 	logger := log.New()
 	logger.Out = os.Stderr
 	logger.SetFormatter(&log.TextFormatter{
