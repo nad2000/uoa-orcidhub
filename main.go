@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"os"
 
-	log "github.com/Sirupsen/logrus"
 	"github.com/nad2000/uoa-orcidhub/homepage"
 	"github.com/nad2000/uoa-orcidhub/server"
+	log "github.com/sirupsen/logrus"
 )
 
 func getenv(key, defaultValue string) string {
@@ -37,12 +37,12 @@ func main() {
 	h := homepage.NewHandlers(logger)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", h.Home)
+	h.SetupRoutes(mux)
 
 	logger.Infoln("Starting the server...")
 	logger.Infof("Certificate: %q", CertFile)
 	logger.Infof("Server Key: %q", KeyFile)
-	logger.Infof("Service Assress: %q", ServiceAddr)
+	logger.Infof("Service Address: %q", ServiceAddr)
 	// err := http.ListenAndServe(":8080", mux) // Invokes the built-in server
 
 	srv := server.New(mux, ServiceAddr)
