@@ -25,6 +25,7 @@ require (
 	github.com/gorilla/handlers v1.4.0
 	github.com/hashicorp/hcl v1.0.0
 	github.com/jessevdk/go-flags v1.4.0
+	github.com/jmoiron/sqlx v1.2.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2
 	github.com/kr/pretty v0.1.0
 	github.com/kr/text v0.1.0
@@ -32,6 +33,7 @@ require (
 	github.com/mailru/easyjson v0.0.0-20190620125010-da37f6c1e481
 	github.com/mattn/go-colorable v0.0.9
 	github.com/mattn/go-isatty v0.0.8
+	github.com/mattn/go-sqlite3 v1.10.0
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/pelletier/go-toml v1.4.0
 	github.com/rakyll/gotest v0.0.0-20180125184505-86f0749cd8cc
